@@ -19,11 +19,17 @@ class CucumberCppConan(ConanFile):
     default_options = {"shared": False, "fPIC": True}
 
     # Sources are located in the same place as this recipe, copy them to the recipe
-    exports_sources = "CMakeLists.txt", "src/*", "include/*"
+    exports_sources = "CMakeLists.txt", "src/*", "include/*", "cmake/*"
+    generators = "CMakeToolchain", "CMakeDeps"
 
     def config_options(self):
         if self.settings.os == "Windows":
             del self.options.fPIC
+
+    def requirements(self):
+        self.requires("nlohmann_json/3.10.5")
+        self.requires("asio/1.27.0")
+        self.requires("tclap/1.2.5") #not available in our repo, needs conan-center
 
     def layout(self):
         cmake_layout(self)
