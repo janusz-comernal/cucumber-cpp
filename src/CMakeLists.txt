@@ -113,6 +113,8 @@ foreach(TARGET
         PRIVATE
             ${CUKE_EXTRA_PRIVATE_LIBRARIES}
             nlohmann_json::nlohmann_json
+            asio::asio
+            tclap::tclap
     )
     # Don't export or import symbols for statically linked libraries
     get_property(type TARGET ${TARGET} PROPERTY TYPE)
@@ -127,7 +129,7 @@ foreach(TARGET
     endif(MINGW)
 endforeach()
 
-git_get_version(CUKE_VERSION)
+#git_get_version(CUKE_VERSION) commented out as during conan create we are not in context of git repo
 message(STATUS "Version: ${CUKE_VERSION}")
 target_compile_definitions(cucumber-cpp PRIVATE
     CUKE_VERSION="${CUKE_VERSION}"
